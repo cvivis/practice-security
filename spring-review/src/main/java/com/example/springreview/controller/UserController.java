@@ -25,6 +25,6 @@ public class UserController {
                  .userName(result.getUserName())
                  .email(result.getEmail())
                  .build();
-         return Response.success(userJoinRes);
+         return Response.success(userJoinRes); // 성공시 결과 출력
     }
 }

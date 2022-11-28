@@ -19,7 +19,7 @@ public class UserService {
         userRepository.findByUserName(userJoinReq.getUserName())
                 .ifPresent(user -> {
                     throw new HospitalReviewAppException(ErrorCode.USERNAME_DUPLICATED,String.format("UserName: %s",userJoinReq.getUserName()));
-                });
+                }); // 에러 발생 지정해서 리턴
         User savedUser = userRepository.save(userJoinReq.toEntity());
         return UserDto.builder()
                 .id(savedUser.getId())

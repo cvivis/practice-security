@@ -16,10 +16,10 @@ public class ExceptionMagnager {
                 .body(Response.error(e.getMessage()));
     }
 
-    @ExceptionHandler(HospitalReviewAppException.class)
+    @ExceptionHandler(HospitalReviewAppException.class) // 해당 예외 발생시 에러 결과 리턴하기
     public ResponseEntity<?> HospitalReviewAppExceptionHandler(HospitalReviewAppException e){
         return ResponseEntity.status(e.getErrorCode().getStatus())
-                .body(Response.error(e.toString()));
+                .body(Response.error(e.toString()));// ErrorCodeMessage + dupName
     }
 
 }

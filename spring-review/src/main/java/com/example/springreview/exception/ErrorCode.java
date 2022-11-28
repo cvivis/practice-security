@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    USERNAME_DUPLICATED(HttpStatus.CONFLICT,"중복된 유저네임");
+    USERNAME_DUPLICATED(HttpStatus.CONFLICT,"중복된 유저네임"); //예외 상황지정
 
     private HttpStatus status;
     private String message;
