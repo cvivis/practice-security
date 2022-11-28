@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
     encoding:
       force-response: true
@@ -15,7 +15,7 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     database: mysql
-    hibernate.ddl-auto: validate
+    hibernate.ddl-auto: update
 
   mvc:
     pathmatch:

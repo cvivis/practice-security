@@ -10,7 +10,7 @@ public class Response<T>{
     private T result; // 모든 결과를 Response객체로 감아서 리턴하기 위한 선언, 결과를 통일성있게 작성할 수 있다.
 
     public static <T> Response<T> error(T result){
-        return new Response("ERROR",result );
+        return new Response("ERROR",result);
     }
 
     public static <T> Response<T> success(T result){

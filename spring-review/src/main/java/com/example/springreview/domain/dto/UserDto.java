@@ -1,12 +1,12 @@
 package com.example.springreview.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode
+@Builder
 public class UserDto {
     private Long id;
     private String userName;
