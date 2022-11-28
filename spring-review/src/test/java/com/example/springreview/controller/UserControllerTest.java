@@ -1,6 +1,9 @@
 package com.example.springreview.controller;
 
+import com.example.springreview.domain.dto.UserDto;
 import com.example.springreview.domain.dto.UserJoinReq;
+import com.example.springreview.exception.ErrorCode;
+import com.example.springreview.exception.HospitalReviewAppException;
 import com.example.springreview.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,13 +46,29 @@ class UserControllerTest {
      }**/
     void join() throws Exception {
         String url = String.format("/users/join");
-        UserJoinReq userJoinReq = new UserJoinReq("asdf","asdf","email");
+        UserJoinReq userJoinReq = new UserJoinReq("qqqq","qqqq","email");
+
+        when(userService.join(any())).thenReturn(mock(UserDto.class));
         String str= objectMapper.writeValueAsString(userJoinReq);
         mockMvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(str))
-//                .andExpect(jsonPath("$.status").value("500"))
-                .andExpect(status().isInternalServerError())
+                .andExpect(status().isOk())
+                .andDo(print());//http request, reponse 내역 출력
+    }
+    @Test
+    @DisplayName("join 테스트")
+    void joinFail() throws Exception {
+        String url = String.format("/users/join");
+        UserJoinReq userJoinReq = new UserJoinReq("asdf","asdf","email");
+
+        when(userService.join(any())).thenReturn(mock(UserDto.class));
+        when(userService.join(any())).thenThrow(new HospitalReviewAppException(ErrorCode.USERNAME_DUPLICATED,""));
+        String str= objectMapper.writeValueAsString(userJoinReq);
+        mockMvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(str))
+                .andExpect(status().isConflict())
                 .andDo(print());//http request, reponse 내역 출력
     }
 }
