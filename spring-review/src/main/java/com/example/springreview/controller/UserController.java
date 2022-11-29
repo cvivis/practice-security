@@ -1,9 +1,7 @@
 package com.example.springreview.controller;
 
 import com.example.springreview.domain.Response;
-import com.example.springreview.domain.dto.UserDto;
-import com.example.springreview.domain.dto.UserJoinReq;
-import com.example.springreview.domain.dto.UserJoinRes;
+import com.example.springreview.domain.dto.*;
 import com.example.springreview.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/login")
+    public Response<UserLoginRes> login(@RequestBody UserLoginReq userLoginReq){
+        UserLoginRes userLoginRes = userService.login(userLoginReq);
+        return Response.success(userLoginRes);
+    }
 
     @PostMapping("/join")
     public Response<UserJoinRes> join(@RequestBody UserJoinReq userJoinReq){
