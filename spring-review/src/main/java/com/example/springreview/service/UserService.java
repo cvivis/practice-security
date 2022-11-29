@@ -8,7 +8,9 @@ import com.example.springreview.domain.dto.UserLoginReq;
 import com.example.springreview.domain.dto.UserLoginRes;
 import com.example.springreview.exception.ErrorCode;
 import com.example.springreview.exception.HospitalReviewAppException;
+import com.example.springreview.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Value("${jwt.token.secret}")//spring 제공 라이브러리
+    private String secretKey;
+
+    private long expiredTimeMs = 1000 * 60 * 60;
 
     public UserDto join(UserJoinReq userJoinReq) {
 
@@ -42,10 +49,11 @@ public class UserService {
         if(!encoder.matches(userLoginReq.getPassword(),user.getPassword())){ // 왼쪽은 평문, 오른쪽은 암호문 둘을 비교한다.
             throw new HospitalReviewAppException(ErrorCode.INVALID_PASSWORD,String.format("password: %s",userLoginReq.getPassword()));
         }
-        //
+        String token = JwtTokenUtils.generateToken(userLoginReq.getUserName(), secretKey, expiredTimeMs);
+
 
         return UserLoginRes.builder()
-                .token("$2a$10$RFh.1BAjRcR2q2BBSiKzLeOlwrqvXHrMXojsJmgqNO3ch2ADiT6sa")// 결과 확인용 암호
+                .token(token)
                 .build();
     }
 }
