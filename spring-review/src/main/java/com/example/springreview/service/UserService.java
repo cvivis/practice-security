@@ -37,6 +37,7 @@ public class UserService {
                 .userName(savedUser.getUserName())
                 .email(savedUser.getEmail())
                 .build();
+
     }
 
     public UserLoginRes login(UserLoginReq userLoginReq) {

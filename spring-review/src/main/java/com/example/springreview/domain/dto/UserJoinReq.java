@@ -15,7 +15,7 @@ public class UserJoinReq {
     public User toEntity(String password){
         return User.builder()
                 .userName(this.userName)
-                .password(password)
+                .password(password) // 암호화된 비밀번호
                 .email(this.email)
                 .build();
     }

@@ -13,7 +13,9 @@ public enum ErrorCode {
     USERNAME_DUPLICATED(HttpStatus.CONFLICT,"중복된 유저네임"), //예외 상황지정
     NOT_FOUND(HttpStatus.NOT_FOUND,"Not Found"),
 
-    INVALID_PASSWORD(HttpStatus.NOT_FOUND,"없는 password");
+    INVALID_PASSWORD(HttpStatus.NOT_FOUND,"없는 password"),
+
+    TOKEN_ERROR(HttpStatus.CONFLICT,"토큰 오류");
 
     private HttpStatus status;
     private String message;
